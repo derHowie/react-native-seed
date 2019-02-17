@@ -1,63 +1,95 @@
-import React from 'react';
-import { Component } from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import {Platform, StyleSheet, Text, View} from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import { createBottomTabNavigator, createAppContainer, createDrawerNavigator, createStackNavigator } from 'react-navigation';
 
-const instructions = Platform.select({
-  android:
-    'Double tap R on your keyboard to reload,\n' +
-    'Shake or press menu button for dev menu',
-  ios: 'Press Cmd+R to reload,\n' + 'Cmd+D or shake for dev menu',
-});
-
-interface Props {
-  getUserData: (str: String) => void;
-  user: any;
-}
-class App extends Component<Props> {
-  componentDidMount() {
-    this.props.getUserData('foo@bar.io');
-  }
-
-  public render() {
+class TabOne extends Component<{ navigation: any }> {
+  render() {
+    const { navigate } = this.props.navigation;
     return (
-      <View style={styles.container}>
-        <Text style={styles.welcome}>Welcome to Template!</Text>
-        <Text style={styles.welcome}>{`Your email is: ${this.props.user.email}`}</Text>
-        <Text style={styles.instructions}>To get started, edit App.js</Text>
-        <Text style={styles.instructions}>{instructions}</Text>
+      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: 'black' }}>
+        <TouchableOpacity onPress={() => navigate('ScreenTwo')}>
+          <Text style={{ color: 'white' }}> Tab One : Screen 1 </Text>
+        </TouchableOpacity>
       </View>
     );
   }
 }
 
-const bindActions = (dispatch: (action: Object) => void) => {
-  return {
-    getUserData: (str: String) => dispatch({ type: 'GET_USER_DATA', email: str }),
-  };
+class ScreenTwo extends Component {
+  render() {
+    return (
+      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: 'black' }}>
+        <Text style={{ color: 'white' }}> Tab One : Screen 2 </Text>
+      </View>
+    );
+  }
 }
 
-const mapStateToProps = ({ user }) => ({
-  user,
+const TabOneNav = createStackNavigator({
+  ScreenOne: TabOne,
+  ScreenTwo,
 });
 
-export default connect(mapStateToProps, bindActions)(App);
+class TabTwo extends Component {
+  render() {
+    return (
+      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+        <Text style={{ color: 'white' }}> Tab Two </Text>
+      </View>
+    );
+  }
+}
 
-const styles = StyleSheet.create({
-  container: {
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
-    flex: 1,
-    justifyContent: 'center',
-  },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
-  },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
-  },
+class TabThree extends Component {
+  render() {
+    return (
+      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+        <Text style={{ color: 'white' }}> Tab Three </Text>
+      </View>
+    );
+  }
+}
+
+const TabNavigator = createBottomTabNavigator({
+    TabOneNav,
+    TabTwo,
+    TabThree,
 });
+
+class HomeScreen extends Component<{ navigation: any }, {}> {
+  static router = TabNavigator.router;
+  static navigationOptions = {
+    drawerLabel: 'Home',
+  };
+  render() {
+    return <TabNavigator navigation={this.props.navigation}/>;
+  }
+}
+
+class OtherScreen extends Component {
+  static navigationOptions = {
+    drawerLabel: 'Other Screen',
+  };  render() {
+    return (
+      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+        <Text style={{ color: 'white' }}> Other Screen </Text>
+      </View>
+    );
+  }
+}
+
+const MyDrawerNavigator = createAppContainer(
+  createDrawerNavigator({
+    HomeScreen,
+    OtherScreen,
+  })
+);
+
+class App extends Component<Props, {}> {
+  public render() {
+    return <MyDrawerNavigator />;
+  }
+}
+
+export default App;
