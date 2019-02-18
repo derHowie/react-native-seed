@@ -2,10 +2,9 @@ import React, { Component } from 'react';
 import { View, Text } from 'react-native';
 import { MenuButton } from '../components/base';
 
-export default class AccountContainer extends Component {
+export default class LoginContainer extends Component {
   static navigationOptions = {
-    title: 'Account',
-    headerRight: <MenuButton color="black" inHeader />,
+    title: 'Login',
   };
 
   render() {
@@ -18,7 +17,7 @@ export default class AccountContainer extends Component {
           alignItems: 'center',
         }}
       >
-        <Text>Account</Text>
+        <Text>Login</Text>
       </View>
     );
   }

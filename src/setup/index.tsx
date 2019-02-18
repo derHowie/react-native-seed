@@ -4,14 +4,13 @@ import { Provider } from 'react-redux';
 import configureStore from './configureStore';
 import App from '../App';
 
-interface Props {}
 interface State {
   store: any;
   isLoading: boolean;
 }
 
-export default class Setup extends React.Component<Props, State> {
-  constructor(props: Props) {
+export default class Setup extends React.Component<{}, State> {
+  constructor(props) {
     super(props);
     this.state = {
       isLoading: false,

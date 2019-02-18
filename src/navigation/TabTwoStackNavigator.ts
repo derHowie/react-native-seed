@@ -1,5 +1,5 @@
 import { createStackNavigator } from 'react-navigation';
-import TabTwoContainer from '../containers/TabTwoContainer';
+import { TabTwoContainer } from '../containers';
 
 export default createStackNavigator({
   TabTwo: TabTwoContainer,

@@ -4,25 +4,27 @@ import { withNavigation } from 'react-navigation';
 import Icon from 'react-native-vector-icons/Entypo';
 
 interface IProps {
-  color: string;
-  inHeader: boolean | undefined;
+  color?: string;
+  inHeader?: boolean | undefined;
   navigation: any;
 }
 
 class MenuButton extends Component<IProps, {}> {
+  static defaultProps = {
+    color: 'white',
+  };
+
   getContainerStyle() {
     return !this.props.inHeader ? null : { paddingRight: 16 };
   }
 
   render() {
-    const color = this.props.color || 'white';
-    const { navigation } = this.props;
     return (
       <TouchableOpacity
-        onPress={navigation.openDrawer}
+        onPress={this.props.navigation.openDrawer}
         style={this.getContainerStyle()}
       >
-        <Icon name="dots-three-vertical" size={30} color={color} />
+        <Icon name="dots-three-vertical" size={30} color={this.props.color} />
       </TouchableOpacity>
     );
   }

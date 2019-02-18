@@ -1,6 +1,6 @@
 import { createStackNavigator } from 'react-navigation';
-import { TabOneContainer } from '../containers';
+import { LoginContainer } from '../containers';
 
 export default createStackNavigator({
-  TabOne: TabOneContainer,
+  Login: LoginContainer,
 });

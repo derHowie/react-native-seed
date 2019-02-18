@@ -1,9 +1,22 @@
 import React from 'react';
-import { createAppContainer } from 'react-navigation';
-import DrawerNavigator from './navigation/DrawerNavigator';
+import { createAppContainer, createSwitchNavigator } from 'react-navigation';
+import MainNavigator from './navigation/DrawerNavigator';
+import { LandingContainer } from './containers';
+import LoginStackNavigator from './navigation/LoginStackNavigator';
 
-const AppContainer = createAppContainer(DrawerNavigator);
+const AppWithLogin = createSwitchNavigator(
+  {
+    Landing: LandingContainer,
+    Main: MainNavigator,
+    Login: LoginStackNavigator,
+  },
+  {
+    initialRouteName: 'Landing',
+  }
+);
 
-export default function App() {
+const AppContainer = createAppContainer(AppWithLogin);
+
+export default function App(): JSX.Element {
   return <AppContainer />;
 }
