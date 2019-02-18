@@ -7,10 +7,10 @@ import rootReducer from '../reducers';
 import rootSaga from '../sagas';
 
 export default function configureStore(callback: () => void): any {
-    const sagaMiddleware = createSagaMiddleware();
-    const enhancer = compose(applyMiddleware(sagaMiddleware));
-    const store = createStore(rootReducer, enhancer);
-    sagaMiddleware.run(rootSaga);
-    persistStore(store, {}, callback);
-    return store;
+  const sagaMiddleware = createSagaMiddleware();
+  const enhancer = compose(applyMiddleware(sagaMiddleware));
+  const store = createStore(rootReducer, enhancer);
+  sagaMiddleware.run(rootSaga);
+  persistStore(store, {}, callback);
+  return store;
 }
